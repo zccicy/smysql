@@ -1,0 +1,64 @@
+#!/bin/bash
+
+comm=`basename ${0}`
+if [ x"${comm}" = x"smysql-passwd" ]
+then
+
+echo 'enter mysql passwd:'
+mysql_passwd=`read`
+echo 'enter [your passwd]:'
+echo ${mysql_passwd}|openssl enc -aes256 -e -a
+
+else
+
+config_file=~/.smysql/config
+host_arg=${1}
+
+source <(grep -iA7 "^ *host  *${host_arg} *$" ${config_file} |sed 's/^ *\([^ ]\{1,\}\) *\([^ ]\{1,\}\) *$/\1=\2/')
+
+if [ x"${host}" = x"" ]
+then
+    echo "invalid host: ${host_arg}"
+    exit
+fi
+
+if [ x"${user}" = x"" ]
+then
+    echo 'user ???'
+    exit
+fi
+
+if [ x"${hostname}" = x"" ]
+then
+    hostname=localhost
+fi
+
+if [ x"${port}" = x"" ]
+then
+    port=3306
+fi
+
+param_database=""
+if [ ! x"${database}" = x"" ]
+then
+    param_database=-D${database}
+fi
+
+
+if [ x"${passwd}" = x"" ]
+then
+    echo "[ ${host} ] "${comm:1} -u${user} -P${port} -p -h${hostname} ${param_database} ${2} ${3} ${4} ${5} ${6} ${7} ${8} ${9}
+    echo "enter mysql passwd"
+else
+    echo "[ ${host} ] "${comm:1} -u${user} -P${port} -p AES256-decode\([your passwd]\) -h${hostname} ${param_database} ${2} ${3} ${4} ${5} ${6} ${7} ${8} ${9}
+    echo "enter [your passwd]:"
+    passwd=`echo ${passwd}|openssl enc -aes256 -d -a`
+    if [ 0 != $? ]
+    then
+        echo "[your passwd] error"
+        exit
+    fi
+fi
+${comm:1} -u${user} -P${port} -p${passwd} -h${hostname} ${param_database} ${2} ${3} ${4} ${5} ${6} ${7} ${8} ${9}
+
+fi

@@ -1,0 +1,8 @@
+#!/bin/bash
+
+host loc
+user selecter
+passwd U2FsdGVkX1+Q5kHQ75xE25Fnfndyq/yfTCPkeednroiTEBbYHerWPCx3iCBiUE1f
+port 3306
+hostname localhost
+database scrapy
