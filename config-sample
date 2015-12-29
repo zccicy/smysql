@@ -1,6 +1,13 @@
-host host-name
-    user mysql-user-nam
-    passwd passwd-encryped-by-aes256-like:U2FsdGVkX1+Q5kHQ75TEBbYHerWPCx3iCBiUE1f
+host mydb
+    user root
+    passwd root
     port 3306
     hostname localhost
-    database your-database-name
+    database test
+
+host mydb2
+    user root
+    passwd aes256:U2FsdGVkX19mp18FWCG/IY9hWxdauO/CZdcOF+BGFHA=
+    port 3306
+    hostname localhost
+    database test

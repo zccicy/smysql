@@ -14,7 +14,13 @@ else
 config_file=~/.smysql/config
 host_arg=${1}
 
-source <(sed '$a\ ' ${config_file} |grep -m1 -iA20 "^ *host  *${host_arg} *$" |grep -m1 -B20 "^ *$"|sed 's/^ *\([^ ]\{1,\}\) *\([^ ]\{1,\}\) *$/\1=\2/')
+source <(\
+    grep -v '^\s*#' ${config_file}|\
+    sed '$a\ ' |\
+    grep -m1 -iA20 "^ *host  *${host_arg} *\(\#.*\)\?$" |\
+    grep -m1 -B20 "^ *$"|\
+    sed 's/^ *\([^ ]\{1,\}\) *\([^ ]\{1,\}\) *\(#.*\)\{0,1\}$/\1=\2/'\
+    )
 
 if [ x"${host}" = x"" ]
 then
@@ -38,7 +44,7 @@ then
     port=3306
 fi
 
-param_database=""
+param_database="test"
 if [ ! x"${database}" = x"" ]
 then
     param_database=-D${database}
