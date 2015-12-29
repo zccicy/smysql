@@ -1,12 +1,12 @@
 # Introduction
 
-Usually you connect mysql like this:
+Usually, you connect mysql like this:
 
     mysql -h127.0.0.1 -P3306 -uroot -proot mydbx
 
 Howerver, it's too long.
 This project aims to make it possible to connect mysql like ssh.
-Write a config file like .ssh/config and type:
+Write ~/.smysql/config similar to .ssh/config and type:
 
     smysql mydb
 
