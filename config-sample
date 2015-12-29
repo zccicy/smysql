@@ -1,5 +1,3 @@
-#!/bin/bash
-
 host host-name
     user mysql-user-nam
     passwd passwd-encryped-by-aes256-like:U2FsdGVkX1+Q5kHQ75TEBbYHerWPCx3iCBiUE1f
